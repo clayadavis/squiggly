@@ -109,12 +109,11 @@ textarea {
 
 #editor-pane,
 #preview-pane {
-    padding: 25px 20px
+    padding: 25px 20px;
 }
 
-.buttonbar li:hover a {
-    color: black;
-    border-color: black;
+.buttonbar {
+    padding-top: 25px;
 }
 
 .placeholder {
@@ -129,9 +128,12 @@ textarea {
 }
 
 .slide-inner{
-    padding: 0 2em;
     display: table-cell;
     /*vertical-align: middle;*/
+}
+
+#preview-pane .slide-inner {
+    padding: 0 2em;
 }
 
 #slideshow-pane .slide-inner {
