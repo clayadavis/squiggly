@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+        <link id="css-bootstrap" rel="stylesheet"
+            href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"
+        >
+        <link rel="stylesheet" href="css/normalize.css">
+        <link rel="stylesheet" href="css/main.css">
+        <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+<a href="https://github.com/clayadavis/squiggly/"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_orange_ff7600.png" alt="Fork me on GitHub"></a>
+
+        <!-- begin content -->
+        <div id="main" class="container">
+            <div id="row">
+                <div id="editor-pane" class="col-md-8">
+                    <div class="row editorwindow">
+                        <textarea id="editor" rows="24" autofocus
+>Slide title
+======
+Your markdown text goes here and gets previewed over there</textarea>
+                    </div>
+                    <div class="row buttonbar">
+                        <div class="btn-group btn-group-justified">
+                            <a id="btn-save"
+                                   href="#" class="btn btn-default"
+                                ><i class="glyphicon glyphicon-floppy-save"
+                                ></i><br/>Save</a>
+                            <a id="btn-load"
+                                   href="#" class="btn btn-default"
+                                   ><i class="glyphicon glyphicon-floppy-open"
+                                   ></i><br/>Load</a>
+                            <a id="btn-slideshow" 
+                                   href="#" class="btn btn-primary"
+                                   ><i class="glyphicon glyphicon-film"
+                                   ></i><br/>Slideshow</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="preview-pane" class="col-md-4">
+                    <div id="preview-overlay-top" class="dropdown">
+                        <a data-toggle="dropdown" href='#'><i 
+                            class='glyphicon glyphicon-asterisk'
+                        ></i></a>
+                        <ul id="menu-themes" class="dropdown-menu" 
+                            role="menu" aria-labelledby="dLabel">
+                            <li id="theme-default" role="presentation"
+                                class="active">
+                                <a role="presentation" tabindex="-1" 
+                                    href="#">Default</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="preview">
+                        <!--div class="slide-outer placeholder">
+                            <div class="slide-inner">
+                                <p>Nothing to preview</p>
+                            </div>
+                        </div-->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="slideshow" class="kinda-hide">
+            <div id="slideshow-nav">
+                <a id="btn-edit" href='#'><i 
+                    class='glyphicon glyphicon-edit'
+                ></i></a>
+            </div>
+            <div id="slideshow-pane">
+
+            </div>
+        </div>
+
+        <div id="alignment-selector" class="kinda-hide">
+            <div class="btn-group-rows">
+                <div class="btn-group">
+                    <a id="btn-hleft" href="#" class="btn btn-default"
+                        data-class="hleft"
+                    ><i class="glyphicon glyphicon-align-left"></i></a>
+                    <a id="btn-hcenter" href="#" class="btn btn-default"
+                        data-class="hcenter"
+                    ><i class="glyphicon glyphicon-align-center"></i></a>
+                    <a id="btn-hright" href="#" class="btn btn-default"
+                        data-class="hright"
+                    ><i class="glyphicon glyphicon-align-right"></i></a>
+                </div>
+                <div class="btn-group">
+                    <a id="btn-vtop" href="#" class="btn btn-default"
+                        data-class="vtop"
+                    ><i class="glyphicon glyphicon-arrow-up"></i></a>
+                    <a id="btn-vmid" href="#" class="btn btn-default"
+                        data-class="vmid"
+                    ><i class="glyphicon glyphicon-minus"></i></a>
+                    <a id="btn-vbottom" href="#" class="btn btn-default"
+                        data-class="vbottom"
+                    ><i class="glyphicon glyphicon-arrow-down"></i></a>
+                </div>
+            </div>
+        </div>
+        <!-- end content -->
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
+        <script
+            src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js">
+        </script>
+        <script
+            src="//cdn.jsdelivr.net/underscorejs/1.5.2/underscore-min.js">
+        </script>
+        <script
+            src="//cdn.jsdelivr.net/underscore.string/2.3.1/underscore.string.min.js">
+        </script>
+        <script src="js/vendor/marked/lib/marked.js"></script>
+        <script src="js/plugins.js"></script>
+        <script src="js/main.js"></script>
+
+        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+        <script>
+            (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+            function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+            e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+            e.src='//www.google-analytics.com/analytics.js';
+            r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+            ga('create','UA-XXXXX-X');ga('send','pageview');
+        </script>
+    </body>
+</html>
