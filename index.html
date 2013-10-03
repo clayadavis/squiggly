@@ -24,32 +24,71 @@
         <![endif]-->
 
         <!-- begin content -->
-        <div id="editor" class="container">
-            <div class="row editorwindow">
-            <textarea id="md-box" rows="24" cols="80"
-                placeholder="Input markdown here"></textarea>
-            </div>
-            <div class="row buttonbar">
-                <ul class="nav nav-justified">
-                    <li><a href="#" class="btn btn-default">Save</a></li>
-                    <li><a href="#" class="btn btn-default">Load</a></li>
-                    <li><a href="#" class="btn btn-primary">Preview</a></li>
-                </ul>
+        <div id="main" class="container">
+            <div id="row">
+                <div id="editor-pane" class="col-md-8">
+                    <div class="row editorwindow">
+                        <textarea id="editor" rows="24" autofocus
+>Slide title
+======
+Your markdown text goes here and gets previewed over there</textarea>
+                    </div>
+                    <div class="row buttonbar">
+                        <ul class="nav nav-justified">
+                            <li><a id="btn-save"
+                                   href="#" class="btn btn-default"
+                                ><i class="glyphicon glyphicon-floppy-save"
+                                ></i><br/>Save</a>
+                            </li>
+                            <li><a id="btn-load"
+                                   href="#" class="btn btn-default"
+                                   ><i class="glyphicon glyphicon-floppy-open"
+                                   ></i><br/>Load</a>
+                            </li>
+                            <li><a id="btn-slideshow" 
+                                   href="#" class="btn btn-primary"
+                                   ><i class="glyphicon glyphicon-film"
+                                   ></i><br/>Slideshow</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div id="preview-pane" class="col-md-4">
+                    <div id="preview">
+                        <!--div class="slide-outer placeholder">
+                            <div class="slide-inner">
+                                <p>Nothing to preview</p>
+                            </div>
+                        </div-->
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div id="preview" class="container">
-            <div style="background-color: coral; height=640px; width=480px;">
-                <p>Nothing to preview yet</p>
+        <div id="slideshow" class="kinda-hide">
+            <div id="slideshow-nav">
+                <a id="btn-edit" href='#'><i 
+                    class='glyphicon glyphicon-edit'
+                ></i></a>
+            </div>
+            <div id="slideshow-pane">
+
             </div>
         </div>
-        <p>Hello world! This is HTML5 Boilerplate.</p>
         <!-- end content -->
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
         <script
             src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js">
         </script>
+        <script
+            src="//cdn.jsdelivr.net/underscorejs/1.5.2/underscore-min.js">
+        </script>
+        <script
+            src="//cdn.jsdelivr.net/underscore.string/2.3.1/underscore.string.min.js">
+        </script>
+        <script src="js/vendor/marked/lib/marked.js"></script>
         <script src="js/plugins.js"></script>
         <script src="js/main.js"></script>
 

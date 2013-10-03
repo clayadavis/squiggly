@@ -103,24 +103,63 @@ textarea {
     margin-left: auto;
     margin-right: auto;
     display:block;
+    box-sizing: border-box;
+    width:100%;
 }
 
-.editorwindow {
-    padding: 40px;   
+#editor-pane,
+#preview-pane {
+    padding: 25px 20px
 }
 
-.buttonbar{
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-    width: 60%;
+.buttonbar li:hover a {
+    color: black;
+    border-color: black;
 }
 
-#preview {
-    padding: 40px;
+.placeholder {
+    opacity: 0.8; 
+    background-color: Coral; 
+    padding: 25px;
 }
 
+.slide-outer{
+    display: table;
+    width: 100%;
+}
 
+.slide-inner{
+    padding: 0 2em;
+    display: table-cell;
+    /*vertical-align: middle;*/
+}
+
+#slideshow-pane .slide-inner {
+    padding: 2em 4em;
+}
+
+#btn-edit {
+    padding: .2em;
+    font-size: 200%;
+    color: white;
+    opacity: 0.8;
+}
+
+#slideshow-nav {
+    position: fixed;
+    top: 0;
+    z-index: 1;
+}
+
+#slideshow-pane {
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+
+.kinda-hide {
+    display: none;
+}
 
 
 

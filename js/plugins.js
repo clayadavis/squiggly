@@ -22,3 +22,4 @@
 }());
 
 // Place any jQuery/helper plugins in here.
+_.mixin(_.str.exports());
