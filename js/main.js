@@ -16,7 +16,7 @@ function updatePreview(ev){
     var slug = _.slugify(name);
 
     $h1.nextUntil('h1').andSelf().wrapAll(
-      '<div class="slide-outer"><div class="slide-inner"/></div>'
+      '<div class="slide-outer"><div class="slide-inner hleft vtop"/></div>'
     );
 
     var $outer = $h1.closest('div.slide-outer');
@@ -32,6 +32,9 @@ function updatePreview(ev){
     );
   });
   $('#preview').html($html.html());
+
+  $('#preview > .slide-outer').mouseenter(previewMouseEnter);
+  $('#preview > .slide-outer').mouseleave(previewMouseLeave);
   //$('#slideshow-pane').html($html.html());
 }
 
@@ -39,7 +42,8 @@ var editorChangeHandler = _.debounce(updatePreview, 500, false);
 
 function slideshowClickHandler(ev){
   $('#slideshow-pane').html($('#preview').html());
-  $('#slideshow-pane .slide-outer').height($(window).height());
+  $('#slideshow-pane .slide-outer').height($(window).height()
+                                  ).addClass('disabled');
   $('#main').hide();
   $('#slideshow').show();
 }
@@ -49,7 +53,7 @@ function editClickHandler(ev){
   $('#main').show();
 }
 
-function saveClickHandler(ev){
+function saveFile(ev){
   function downloadURL(url) {
       var hiddenIFrameID = 'hiddenDownloader',
           iframe = document.getElementById(hiddenIFrameID);
@@ -65,19 +69,95 @@ function saveClickHandler(ev){
   console.log('saving');
   var blob = new Blob([$('#editor').val()], {type: 'application/x-please-download'});
   var url = window.URL.createObjectURL(blob);
-  // window.location = url; // might be really bad
-  // OR
-  // downloadURL(url);
-  // OR
-  // use downloadify https://github.com/dcneiner/Downloadify
-  // OR
-  // upload to a gist?
-  // OR
+  downloadURL(url);
+  // could downloadify https://github.com/dcneiner/Downloadify
   // Another way: http://html5-demos.appspot.com/static/a.download.html
 }
 
-function loadClickHandler(ev){
+function saveGist(ev){
+  var text = $('#editor').val();
+  var gist= {
+    "description": "A saved squiggly presentation.",
+    "public": false,
+    "files": {
+      "squiggle.md": {
+        "content": text
+      }
+    }
+  }
+  $.ajax({
+    type: "POST",
+    url: 'https://api.github.com/gists',
+    data: JSON.stringify(gist),
+    dataType: 'json'
+  }).done(function(resp){
+      var raw = resp.files['squiggle.md'].raw_url;
+      $('#editor-pane .buttonbar').prepend(
+       '<div class="alert alert-success alert-dismissable">' +
+       ' <button type="button" class="close" data-dismiss="alert"' +
+       ' aria-hidden="true">&times;</button>' +
+       ' <strong>Success!</strong> Saved to Gist' +
+       '   <a href="' + resp.html_url + '">' + resp.html_url + '</a> .' +
+       '   Don\'t lose that link! </div>')
+      //window.open(resp.html_url);
+      console.log('save success');
+  }).fail(function(resp){
+      $('#editor-pane .buttonbar').prepend(
+       '<div class="alert alert-success alert-danger">' +
+       '<button type="button" class="close" data-dismiss="alert"' +
+       'aria-hidden="true">&times;</button>' +
+       '  <strong>Warning!</strong> Failed to save your squiggle to Gist.' +
+       '  Try again later.</div>')
+      //window.open(resp.html_url);
+      console.log('save failed');
 
+  });
+}
+
+function loadGist(ev){
+  //GET /gists/:id
+  //$.ajax
+  //var raw = data.files['squiggle.md'].raw_url;
+  //$.ajax
+  //$('#editor').val(data);
+}
+
+function loadClickHandler(ev){
+  if (window.File && window.FileReader && window.FileList && window.Blob) {
+    // Great success! All the File APIs are supported.
+    alert('File loading coming soon');
+  } else {
+    alert('The File APIs are not fully supported in this browser.');
+  }
+}
+
+function loadThemes(){
+  var themes = ['Amelia', 'Cerulean', 'Cosmo', 'Cyborg', 'Flatly', 'Journal',
+                'Readable', 'Simplex', 'Slate', 'Spacelab', 'United'];
+  var $ul = $('#menu-themes');
+  for (i=0;i<themes.length;i++){
+    var $li = $('<li id="theme-'+ themes[i].toLowerCase() +
+                '" role="presentation">' +
+                '<a role="menuitem" tabindex="-1" href="#">' +
+                themes[i] + '</a></li>');
+    $ul.append($li);
+  }
+  $ul.children().click(function(){
+    $this = $(this);
+    if ($this.hasClass('active')){
+      return false;
+    }
+    var name = $this.text();
+    if (name === 'Default'){
+      var url =
+        '//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css';
+    } else {
+      var url = '//netdna.bootstrapcdn.com/bootswatch/3.0.0/' +
+                $this.text().toLowerCase() + '/bootstrap.min.css';
+    }
+    $('#css-bootstrap').attr('href', url);
+    $this.addClass('active').siblings().removeClass('active');
+  });
 }
 
 function resizeSlideshow(ev){
@@ -88,21 +168,83 @@ function resizeSlideshow(ev){
   }
 }
 
+function previewMouseEnter(ev){
+  var $this = $(this);
+  var $as = $('#alignment-selector');
+  clearTimeout($as.data('hideTimer'));
+  var pos = $this.offset();
+  var x = ($this.width() - $as.width())/2;
+  var y = ($this.height() - $as.height())/2;
+  $as.css('left', pos.left + x).css('top', pos.top + y).show();
+  bindAlignmentSelector($this);
+}
+
+function bindAlignmentSelector($target){
+  var $btns = $('#alignment-selector .btn');
+  var $inner = $target.find('.slide-inner');
+  $btns.unbind().click(function(){
+    var $this = $(this);
+    $this.addClass('active').siblings().removeClass('active');
+    var myClass = $this.data('class');
+    if (_(myClass).startsWith('h')){
+      $inner.removeClass('hleft hcenter hright').addClass(myClass);
+    } else {
+      $inner.removeClass('vbottom vmid vtop').addClass(myClass);
+    }
+  });
+  $btns.each(function(){
+    var $btn = $(this);
+    if ($inner.hasClass($btn.data('class'))){
+      $btn.addClass('active').siblings().removeClass('active');
+    }
+  });
+}
+
+function previewMouseLeave(ev){
+  var $as = $('#alignment-selector');
+  var hideTimer = setTimeout(function(){$as.hide()},10);
+  $as.data('hideTimer', hideTimer);
+}
 
 $(window).load(function(){
   $('#btn-slideshow').click(slideshowClickHandler);
   $('#btn-edit').click(editClickHandler);
-  $('#btn-save').click(saveClickHandler);
+  $('#btn-save').click(saveGist);
   $('#btn-load').click(loadClickHandler);
 
   $('#editor').keyup(editorChangeHandler);
-
+  loadThemes();
   $(window).resize(_.debounce(resizeSlideshow, 1, false));
   //$(window).resize(resizeSlideshow);
+
+  $('#alignment-selector').mouseenter(function(ev){
+    clearTimeout($(this).data('hideTimer'));
+  });
+
+  $('#alignment-selector').mouseleave(function(ev){
+    $as = $(this);
+    var hideTimer = setTimeout(function(){$as.hide()},10);
+    $as.data('hideTimer', hideTimer);
+  });
+
+  $('#alignment-selector .btn').click(function(){
+    var $this = $(this);
+    $this.addClass('active').siblings().removeClass('active');
+    var myClass = $this.data('class');
+    $target = function(){return $this.data('$target');}();
+    console.log($target);
+    if (_(myClass).startsWith('h')){
+      $target.removeClass('hleft hcenter hright').addClass(myClass);
+    } else {
+      $target.removeClass('vbottom vmid vtop').addClass(myClass);
+    }
+  });
 
 });
 
 $(document).ready(function(){
   editorChangeHandler();
+  var h = $('.buttonbar').height() + $('.buttonbar').position().top;
+  $('#preview').height(h + 'px');
 });
 

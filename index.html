@@ -11,7 +11,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-        <link rel="stylesheet"
+        <link id="css-bootstrap" rel="stylesheet"
             href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"
         >
         <link rel="stylesheet" href="css/normalize.css">
@@ -52,6 +52,19 @@ Your markdown text goes here and gets previewed over there</textarea>
                 </div>
 
                 <div id="preview-pane" class="col-md-4">
+                    <div id="preview-overlay-top" class="dropdown">
+                        <a data-toggle="dropdown" href='#'><i 
+                            class='glyphicon glyphicon-asterisk'
+                        ></i></a>
+                        <ul id="menu-themes" class="dropdown-menu" 
+                            role="menu" aria-labelledby="dLabel">
+                            <li id="theme-default" role="presentation"
+                                class="active">
+                                <a role="presentation" tabindex="-1" 
+                                    href="#">Default</a>
+                            </li>
+                        </ul>
+                    </div>
                     <div id="preview">
                         <!--div class="slide-outer placeholder">
                             <div class="slide-inner">
@@ -71,6 +84,33 @@ Your markdown text goes here and gets previewed over there</textarea>
             </div>
             <div id="slideshow-pane">
 
+            </div>
+        </div>
+
+        <div id="alignment-selector" class="kinda-hide">
+            <div class="btn-group-rows">
+                <div class="btn-group">
+                    <a id="btn-hleft" href="#" class="btn btn-default"
+                        data-class="hleft"
+                    ><i class="glyphicon glyphicon-align-left"></i></a>
+                    <a id="btn-hcenter" href="#" class="btn btn-default"
+                        data-class="hcenter"
+                    ><i class="glyphicon glyphicon-align-center"></i></a>
+                    <a id="btn-hright" href="#" class="btn btn-default"
+                        data-class="hright"
+                    ><i class="glyphicon glyphicon-align-right"></i></a>
+                </div>
+                <div class="btn-group">
+                    <a id="btn-vtop" href="#" class="btn btn-default"
+                        data-class="vtop"
+                    ><i class="glyphicon glyphicon-arrow-up"></i></a>
+                    <a id="btn-vmid" href="#" class="btn btn-default"
+                        data-class="vmid"
+                    ><i class="glyphicon glyphicon-minus"></i></a>
+                    <a id="btn-vbottom" href="#" class="btn btn-default"
+                        data-class="vbottom"
+                    ><i class="glyphicon glyphicon-arrow-down"></i></a>
+                </div>
             </div>
         </div>
         <!-- end content -->
