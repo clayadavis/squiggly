@@ -280,10 +280,12 @@ $(window).load(function(){
   });
 
   $(document).keydown(function(ev) {
-    if(ev.keyCode == 39 || ev.keyCode == 40){
+    if((ev.keyCode == 39 || ev.keyCode == 40)
+        && $('#slideshow').is(':visible')){
       ev.preventDefault();
       nextSlide();
-    } else if (ev.keyCode == 37 || ev.keyCode == 38){
+    } else if ((ev.keyCode == 37 || ev.keyCode == 38)
+        && $('#slideshow').is(':visible')){
       ev.preventDefault();
       prevSlide();
     }
