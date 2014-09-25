@@ -1,9 +1,27 @@
+cookieName = 'squigglyText='
+
+function writeCookie(md){
+  document.cookie = cookieName + encodeURIComponent(md);
+}
+
+function readCookie(){
+  var ca = document.cookie.split(';');
+  for (i=0; i < ca.length; i++){
+    var c = ca[i];
+    while (c.charAt(0) == ' ') c = c.substring(1);
+    if (c.indexOf(cookieName) != 1) {
+      return decodeURIComponent(c.substring(cookieName.length, c.length));
+    }
+  }
+}
+
 function updatePreview(ev){
   console.log("Updating preview...")
   var md = $('#editor').val();
   var html = marked(md);
   var $html = $('<div>' + html + '</div>');
   g_html = html;
+  writeCookie(md);
 
   var i = 0;
   var slideStyles = ['btn-primary', 'btn-success', 'btn-info',
@@ -277,6 +295,9 @@ $(document).ready(function(){
   editorChangeHandler();
   var h = $('.buttonbar').height() + $('.buttonbar').position().top;
   $('#preview').height(h + 'px');
+  if (readCookie()){
+    $('#editor').val(readCookie());
+  }
 });
 
 var g_currentSlide;
